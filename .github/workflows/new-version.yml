@@ -7,7 +7,7 @@ on:
       - edited
 
 env: 
-  SERVICE: client-service
+  SERVICE: user-service
 
 jobs:
   tag: 
