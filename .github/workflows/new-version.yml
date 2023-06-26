@@ -1,0 +1,42 @@
+name: new version test
+on: 
+  pull_request:
+
+env: 
+  SERVICE: test-servis
+
+jobs:
+  tag: 
+      runs-on: ubuntu-latest
+      timeout-minutes: 1
+
+      steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.BOT_ACCESS_TOKEN}}
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Looking for minor changes 
+        if:  ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
+        run: echo "NEW_VERSION=$(npm version minor --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
+
+      - name: Looking for patch changes
+        if: ${{contains(github.event.pull_request.labels.*.name, 'version:patch')}}
+        run: echo "NEW_VERSION=$(npm version patch --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
+
+      - name: Looking for major changes
+        if:  ${{contains(github.event.pull_request.labels.*.name, 'version:major')}}
+        run: echo "NEW_VERSION=$(npm version major --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
+
+      - name: Set outputs
+        id: output
+        run: echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Trigger new version
+        run: |    
+          curl -XPOST -H "Authorization: token ${{ secrets.BOT_ACCESS_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/bojancakar/CI-test/dispatches --data '{"event_type": "nova-verzija","client_payload":{"service": "${{ env.SERVICE }}", "version": "${{ steps.output.outputs.new_version}}" }}'
