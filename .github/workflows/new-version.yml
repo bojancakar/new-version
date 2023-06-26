@@ -1,6 +1,10 @@
 name: new version test
 on: 
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - edited
 
 env: 
   SERVICE: test-servis
