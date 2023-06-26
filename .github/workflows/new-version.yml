@@ -7,7 +7,7 @@ on:
       - edited
 
 env: 
-  SERVICE: test-servis-2
+  SERVICE: testiranje
 
 jobs:
   tag: 
