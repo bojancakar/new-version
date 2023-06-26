@@ -7,7 +7,7 @@ on:
       - edited
 
 env: 
-  SERVICE: client-service
+  SERVICE: user-service
 
 jobs:
   tag: 
@@ -25,6 +25,7 @@ jobs:
         with:
           node-version: 16
 
+          
       - name: Looking for minor changes 
         if:  ${{contains(github.event.pull_request.labels.*.name, 'version:minor')}}
         run: echo "NEW_VERSION=$(npm version minor --no-git-tag-version --tag-version-prefix="")" >> $GITHUB_ENV
