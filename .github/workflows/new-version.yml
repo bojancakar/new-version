@@ -7,7 +7,7 @@ on:
       - edited
 
 env: 
-  SERVICE: testiranje_dvojka
+  SERVICE: testiranje_cetvorka
 
 jobs:
   tag: 
