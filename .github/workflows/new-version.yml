@@ -43,4 +43,4 @@ jobs:
 
       - name: Trigger new version
         run: |    
-          curl -XPOST -H "Authorization: token ${{ secrets.BOT_ACCESS_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/bojancakar/CI-test/dispatches --data '{"event_type": "nova-verzija","client_payload":{"service": "${{ env.SERVICE }}", "version": "${{ steps.output.outputs.new_version}}" }}'
+          curl -XPOST -H "Authorization: token ${{ secrets.TEST_TOKEN }}" -H "Accept: application/vnd.github.everest-preview+json" -H "Content-Type: application/json" https://api.github.com/repos/bojancakar/CI-test/dispatches --data '{"event_type": "nova-verzija","client_payload":{"service": "${{ env.SERVICE }}", "version": "${{ steps.output.outputs.new_version}}" }}'
