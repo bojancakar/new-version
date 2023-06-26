@@ -7,7 +7,7 @@ on:
       - edited
 
 env: 
-  SERVICE: testiranje_petica
+  SERVICE: testiranje_sestica
 
 jobs:
   tag: 
